@@ -11,9 +11,8 @@ android {
     defaultConfig {
         applicationId "com.desirecodes.imagepicker.sample"
         minSdkVersion 19
-        targetSdkVersion 30
-        versionCode 16
-        versionName "2.1"
+        versionCode 1
+        versionName "0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

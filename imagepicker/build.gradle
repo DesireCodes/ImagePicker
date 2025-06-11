@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven-publish' //Could not find method publishing() for arguments
 }
 
 apply from: "../ktlint.gradle"
@@ -10,7 +11,7 @@ android {
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,6 +35,25 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+/*    publishing {
+
+        *//** this is use to overcome error bellow
+         * A problem occurred configuring project ':rating'.
+         > Could not get unknown property 'release' for SoftwareComponentInternal set of type org.gradle.api.internal.component.DefaultSoftwareComponentContainer.
+         * *//*
+
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+
+        multipleVariants {
+            withSourcesJar()
+            withJavadocJar()
+            allVariants()
+        }
+    }*/
+
 }
 
 dependencies {
@@ -56,7 +76,7 @@ dependencies {
     androidTestImplementation 'androidx.test:core:1.3.0'
 }
 
-ext {
+/*ext {
     bintrayRepo = 'maven'
     bintrayName = 'imagepicker'
 
@@ -81,4 +101,22 @@ ext {
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
+}*/
+
+repositories {
+    mavenCentral()
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.github.DesireCodes'
+                artifactId = 'imagepicker'
+                version = '1.0.0'
+            }
+        }
+    }
 }
